@@ -1,7 +1,5 @@
 path := .
 
-TEST_FOLDER := tests/
-
 .DEFAULT_GOAL := help
 MAKEFLAGS 	  += --silent --no-print-directory
 
@@ -86,14 +84,6 @@ clean:  ## Clear linter cache (.mypy_cache .ruff_cache)
 	@rm -rf .ruff_cache
 	@rm -rf .pytest_cache
 
-
-# Tests
-##############################################################################
-
-
-.PHONY: test
-test:  ## Runs tests for the application
-	poetry run python -m pytest $(TEST_FOLDER)
 
 # Other
 ##############################################################################
