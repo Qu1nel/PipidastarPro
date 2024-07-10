@@ -91,6 +91,7 @@ ignore = [
     "B009",   # Detected getattr(obj, ...)
     "B010",   # Detected setattr(obj, ..., ...)
     "INP001", # Check missing __init__.py in packages
+    "I001",   # Check style of import block
     "PIE796", # Check for enums that contain duplicate values
     "T201",   # Check for print statement
     "T203",   # Check for pprint statement
