@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 
-from bot.misc import InterceptHandler
+from bot.misc.logs import InterceptHandler
 from bot.misc.types import HandlerType
 
 

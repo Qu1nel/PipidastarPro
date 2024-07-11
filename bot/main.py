@@ -1,22 +1,23 @@
-from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage  # type: ignore
-from aiogram.utils import executor  # type: ignore
+from aiogram import Dispatcher, Bot
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums.parse_mode import ParseMode
 
-from loguru import logger
-
-from bot.database.models import register_models
-from bot.filters import register_all_filters
+from bot.misc import cfg
 from bot.handlers import register_all_handlers
+from bot.callbacks import register_all_callbacks
 
 
-async def __on_startup(dp: Dispatcher) -> None:
-    register_all_filters(dp)
+def on_startup(dp: Dispatcher) -> None:
     register_all_handlers(dp)
-    register_models()
+    register_all_callbacks(dp)
 
 
-@logger.catch()
-def start(bt: Bot) -> None:
-    """Function to launch a dispatcher for bot."""
-    dp = Dispatcher(bt, storage=MemoryStorage())  # type: ignore
-    executor.start_polling(dp, skip_updates=True, on_startup=__on_startup)
+async def start_bot() -> None:
+    """Function to launch a single bot instance."""
+    bot = Bot(token=cfg.bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    dp = Dispatcher()
+
+    on_startup(dp)
+
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)

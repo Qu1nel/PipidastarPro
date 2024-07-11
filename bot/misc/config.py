@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from pathlib import Path
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings
 
@@ -10,7 +10,7 @@ from bot.misc.utils import get_handlers_for_filtered
 
 __all__ = ["_config"]
 
-load_dotenv()
+load_dotenv(find_dotenv(".env"))
 env_location = Path(".env").resolve()
 
 
@@ -24,7 +24,7 @@ class BotConfig(BaseSettings):
     token: str
 
     class Config:
-        case_sensitive = True
+        case_sensitive = False
         env_prefix = "BOT_"
         _env_file = env_location
         _env_file_encoding = "utf-8"
