@@ -15,8 +15,22 @@ RESET		:= \\033[0m
 
 
 .PHONY: update
-update:
+update:  ## Updating poetry's packages
 	poetry install
+
+
+# Docker
+##############################################################################
+
+
+.PHONY: docker_run
+docker_run: docker_build  ## Stating bot with docker
+	docker run -it --rm --name tg_bot tg_bot_img
+
+
+.PHONY: docker_build
+docker_build:  ## Stating building bot
+	docker build -t tg_bot_img .
 
 
 # Lint
