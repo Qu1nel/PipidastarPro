@@ -72,6 +72,7 @@ exclude = [
 ]
 ignore = [
     "D100",   # Docstring in public module
+    "D103",   # Docstring in public functions
     "D104",   # Docstring in public package
     "D107",   # Docstring __init__ method
     "D203",   # Docstring one blank line before class
