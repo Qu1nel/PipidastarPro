@@ -1,5 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType
-
+from aiogram.types import KeyboardButton, KeyboardButtonPollType, ReplyKeyboardMarkup
 
 main_menu = ReplyKeyboardMarkup(
     keyboard=[

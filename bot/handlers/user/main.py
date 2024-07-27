@@ -1,10 +1,9 @@
 import random
 
-from aiogram import Router, Dispatcher
-from aiogram.types import Message
-from aiogram.filters import CommandStart, CommandObject, Command
+from aiogram import Router
 from aiogram.enums.dice_emoji import DiceEmoji
-
+from aiogram.filters import Command, CommandObject, CommandStart
+from aiogram.types import Message
 from loguru import logger
 
 import bot.keyboards as kb
@@ -30,7 +29,3 @@ async def get_random_numbr(msg: Message, command: CommandObject) -> None:
     if command.args:
         num = random.randint(*(int(n) for n in command.args.split("-")))
         await msg.reply(f"Random number: {num}")
-
-
-def register_user_handlers(dp: Dispatcher) -> None:
-    dp.include_router(user_router)

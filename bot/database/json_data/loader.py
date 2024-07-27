@@ -1,7 +1,7 @@
 from pathlib import Path
 
-import ujson  # pyright: ignore[reportMissingModuleSource]
 import aiofiles
+import ujson  # pyright: ignore[reportMissingModuleSource]
 
 
 async def get_content_json_from_file(file_name: Path) -> list:

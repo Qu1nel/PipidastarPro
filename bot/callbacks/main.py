@@ -1,8 +1,7 @@
-from aiogram import Dispatcher, Router, F
-
-from bot.callbacks.paginators import pagination_handler
+from aiogram import Dispatcher, F, Router
 
 import bot.keyboards as kb
+from bot.callbacks.paginators import pagination_handler
 
 callbacks_router = Router(name="callbacks_router")
 

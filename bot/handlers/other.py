@@ -1,13 +1,11 @@
 from pathlib import Path
 
-from aiogram import Router, F, Dispatcher
+from aiogram import F, Router
 from aiogram.types import Message
-
 from loguru import logger
 
-from bot.database.json_data import get_content_json_from_file
 import bot.keyboards as kb
-
+from bot.database.json_data import get_content_json_from_file
 
 bot_msg_router = Router(name="bot_msg_router")
 
@@ -39,7 +37,3 @@ async def echo(message: Message) -> None:
             await message.answer("Menu", reply_markup=kb.replies.main_menu)
         case _:
             logger.error(f"{msg = }")
-
-
-def register_other_handlers(dp: Dispatcher) -> None:
-    dp.include_router(bot_msg_router)

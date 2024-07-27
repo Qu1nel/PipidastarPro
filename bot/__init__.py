@@ -3,11 +3,11 @@ import os
 
 from loguru import logger
 
-from bot.misc import cfg
 from bot.main import start_bot
+from bot.misc import config
 
-logging_config = cfg.logging
-bot_config = cfg.bot
+logging_config = config.logging
+bot_config = config.bot
 
 __all__ = ["start_bot", "logging_config", "bot_config"]
 

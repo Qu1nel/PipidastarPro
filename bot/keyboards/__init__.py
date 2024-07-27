@@ -1,6 +1,3 @@
-from bot.keyboards import replies
-from bot.keyboards import builders
-from bot.keyboards import fabrics
-from bot.keyboards import inlines
+from bot.keyboards import builders, fabrics, inlines, replies
 
 __all__ = ["replies", "inlines", "fabrics", "builders"]

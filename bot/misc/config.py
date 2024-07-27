@@ -1,27 +1,22 @@
 from collections.abc import Sequence
 from pathlib import Path
 
-from dotenv import load_dotenv, find_dotenv
-from pydantic import BaseModel, Field
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums.parse_mode import ParseMode
+from dotenv import find_dotenv, load_dotenv
+from pydantic import BaseModel, Field, SecretStr
 from pydantic_settings import BaseSettings
 
 from bot.misc.types import HandlerType
 from bot.misc.utils import get_handlers_for_filtered
-
-__all__ = ["_config"]
 
 load_dotenv(find_dotenv(".env"))
 env_location = Path(".env").resolve()
 
 
 class BotConfig(BaseSettings):
-    """Bot configuration storage class.
-
-    Attributes:
-        token - A secret token for bot.
-    """
-
-    token: str
+    token: SecretStr
+    properties: DefaultBotProperties = DefaultBotProperties(parse_mode=ParseMode.HTML)
 
     class Config:
         case_sensitive = False
@@ -31,8 +26,6 @@ class BotConfig(BaseSettings):
 
 
 class BaseLoggingConfig(BaseSettings):
-    """Base logging config."""
-
     level: int = 0
     force: bool = True
     handlers: Sequence[HandlerType] = Field(default_factory=get_handlers_for_filtered)
@@ -45,8 +38,6 @@ class BaseLoggingConfig(BaseSettings):
 
 
 class LoggingConfig(BaseModel):
-    """Initialization class for logging."""
-
     base: BaseLoggingConfig = Field(default_factory=BaseLoggingConfig)
     format_output: str = "{time} | {level} | {module}:{function}:{line} | {message}"
     rotation: str = "2 MB"
@@ -56,8 +47,6 @@ class LoggingConfig(BaseModel):
 
 
 class MainBotConfig(BaseSettings):
-    """Main configuration storage class."""
-
     bot: BotConfig = Field(default_factory=BotConfig)  # type: ignore
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
 

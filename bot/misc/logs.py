@@ -4,8 +4,8 @@ import sys
 from loguru import logger
 
 
-class InterceptHandler(logging.Handler):  # noqa: D101
-    def emit(self, record):  # noqa: ANN001, D102, ANN201
+class InterceptHandler(logging.Handler):
+    def emit(self, record):  # noqa: ANN001, ANN201
         try:
             level = logger.level(record.levelname).name
         except ValueError:

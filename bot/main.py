@@ -1,23 +1,29 @@
-from aiogram import Dispatcher, Bot
+from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
-from aiogram.enums.parse_mode import ParseMode
+from loguru import logger
 
-from bot.misc import cfg
-from bot.handlers import register_all_handlers
 from bot.callbacks import register_all_callbacks
+from bot.handlers import register_all_handlers
+from bot.misc import config
 
 
-def on_startup(dp: Dispatcher) -> None:
-    register_all_handlers(dp)
-    register_all_callbacks(dp)
+class ClientBot:
+    bot: Bot
+    dp: Dispatcher
+
+    def __init__(self, token: str, default: DefaultBotProperties | None = None) -> None:
+        self.bot = Bot(token=token, default=default)
+
+    def init(self, dispatcher: Dispatcher) -> None:
+        self.dp = dispatcher
+        for register in (register_all_handlers, register_all_callbacks):
+            register(self.dp)
 
 
+@logger.catch()
 async def start_bot() -> None:
-    """Function to launch a single bot instance."""
-    bot = Bot(token=cfg.bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    dp = Dispatcher()
+    client_bot = ClientBot(token=config.bot.token.get_secret_value(), default=config.bot.properties)
+    client_bot.init(dispatcher=Dispatcher())
 
-    on_startup(dp)
-
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    await client_bot.bot.delete_webhook(drop_pending_updates=True)
+    await client_bot.dp.start_polling(client_bot.bot)

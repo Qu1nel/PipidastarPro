@@ -1,13 +1,12 @@
 from contextlib import suppress
 from pathlib import Path
 
-from aiogram.types import CallbackQuery
 from aiogram.exceptions import TelegramBadRequest
-
-from bot.misc.types import KbPaginatorType
-from bot.database.json_data import get_content_json_from_file
+from aiogram.types import CallbackQuery
 
 import bot.keyboards as kb
+from bot.database.json_data import get_content_json_from_file
+from bot.misc.types import KbPaginatorType
 
 
 async def pagination_handler(query: CallbackQuery, callback_data: KbPaginatorType) -> None:
